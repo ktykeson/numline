@@ -8,7 +8,28 @@ const NumberLine = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
   
-    // Adjusted number generation function remains the same
+    // Function to handle number drag start
+    const handleDragStart = (e, number) => {
+        e.dataTransfer.setData('text/plain', number);
+      };
+  
+      // Function to handle drop on input field
+      const handleDrop = (index, e) => {
+        e.preventDefault();
+        const number = e.dataTransfer.getData('text');
+        setUserInputs({
+          ...userInputs,
+          [index]: number.trim() // Trim whitespace and set as input value
+        });
+  
+        // Optional: You might want to update the input fields to show the dropped number
+        e.target.value = number.trim(); // This directly sets the input value which is not the React way
+      };
+  
+      // Function to allow dropping by preventing the default behavior
+      const allowDrop = (e) => {
+        e.preventDefault();
+      };
   
     // Function to handle user input change
     const handleInputChange = (index, value) => {
@@ -79,12 +100,24 @@ const NumberLine = () => {
       <p className="instructions">Match the following numbers to the correct position on the number line:</p>
       <div className="numbers-list">
         {answers.map((number, index) => (
-          <span key={index} className="number">{number}</span>
+          // Making numbers draggable
+          <span key={index} className="number" draggable="true" 
+                onDragStart={(e) => e.dataTransfer.setData('text', number.toString())}>
+            {number}
+          </span>
         ))}
       </div>
       {answers.map((position, index) => (
         <div key={index} data-number={position} className="arrow-and-input" style={{ left: `${(4*position+50)}%` }}>
-          <input type="text" onChange={(e) => handleInputChange(index, e.target.value)} />
+          <input type="text" 
+                 onDrop={(e) => {
+                   e.preventDefault();
+                   const data = e.dataTransfer.getData('text');
+                   setUserInputs({...userInputs, [index]: data});
+                   e.target.value = data; // Direct manipulation for visual feedback, consider syncing with state for React-controlled approach
+                 }} 
+                 onDragOver={(e) => e.preventDefault()} // Necessary to allow drop
+                 onChange={(e) => handleInputChange(index, e.target.value)} />
           <div className="arrow" />
         </div>
       ))}
