@@ -1,145 +1,65 @@
-.App {
-  display: flex;
-  justify-content: center;
-  gap: 2vh;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  background-color: #ffffff;
-}
-
-.graph_box {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-}
-
-.equation_display {
-  background-color: rgba(0, 0, 0, 0.8);
-  /* Slightly transparent white background */
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  /* Adjust the size to your preference */
-  color: #333;
-  text-align: center;
-  /* Dark text color for readability */
-}
-
-button {
-  margin: 5px;
-  padding: 10px;
-  background-color: rgb(29, 119, 255) !important;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:focus {
-  outline: none;
-}
-
-.line_graph {
-  width: 80% !important;
-}
-
-.arrow_box {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-#up_arrow {
-  transform: rotate(270deg);
-  -webkit-transform: rotate(270deg);
-  -moz-transform: rotate(270deg);
-  -ms-transform: rotate(270deg);
-  -o-transform: rotate(270deg);
-}
-
-#down_arrow {
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-}
-
-#left_arrow {
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-}
-
-#right_arrow {
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-}
-
-#up_arrow {
-  transform: rotate(270deg);
-  -webkit-transform: rotate(270deg);
-  -moz-transform: rotate(270deg);
-  -ms-transform: rotate(270deg);
-  -o-transform: rotate(270deg);
-}
-
-.question_container {
-  color: white;
-}
-
-.target_equation {
-  background-color: rgba(32, 32, 32, 0.8);
-  padding: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-}
-
-.submit_button {
+.number-line {
+  position: relative;
   width: 100%;
-  color: white;
-  background-color: green !important;
+  height: 120px; /* Provide enough space for marks and arrows */
+  background-color: white; /* Ensure background is white */
 }
 
-.dialog_box {
-  position: fixed;
+.line {
+  position: absolute;
+  width: 80%; /* Width can be less than 100% if you want margins on the sides */
+  height: 3px; /* Make the main line thicker for visibility */
+  background-color: black;
+  left: 10%; /* Center the line with margin on both sides */
   top: 50%;
+  transform: translateY(-50%);
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  width: 1px; /* Thin vertical line for the mark */
+  height: 15px; /* Height of the major marks */
+  background-color: black;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.mark::after {
+  content: attr(data-number);
+  position: absolute;
+  top: 20px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  background-color: #333;
-  border-radius: 20px;
-  width: 20vw;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  transform: translateX(-50%);
+  font-size: 14px;
 }
 
-.dialog_message {
-  color: white;
-  font-weight: 100;
+.arrow {
+  position: absolute;
+  top: 10px; /* Position the arrows above the line */
+  height: 0;
+  width: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 12px solid red; /* Larger red arrow for visibility */
 }
 
-.dialog_confirmation {
-  background-color: green !important;
+input[type="text"] {
+  position: absolute;
+  bottom: 30px; /* Position below the arrow */
+  width: 50px; /* Set the width of your input fields */
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+/* Positioning helper classes, you'd set these based on the fraction you want to indicate. */
+.quarter {
+  left: 25%;
+}
+
+.half {
+  left: 50%;
+}
+
+.three-quarters {
+  left: 75%;
 }
