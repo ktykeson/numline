@@ -1,7 +1,11 @@
+body{
+  background-color: white;
+}
+
 .number-line {
   position: relative;
-  width: 100%;
-  height: 120px; /* Provide enough space for marks and arrows */
+  width: 100vw;
+  height: 50vh; /* Provide enough space for marks and arrows */
   background-color: white; /* Ensure background is white */
 }
 
@@ -17,10 +21,10 @@
 
 .mark {
   position: absolute;
-  top: 50%;
-  width: 1px; /* Thin vertical line for the mark */
+  width: 2px; /* Thin vertical line for the mark */
   height: 15px; /* Height of the major marks */
   background-color: black;
+  top: 50%;
   transform: translateY(-50%) translateX(-50%);
 }
 
@@ -31,24 +35,52 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 14px;
+  color: #000000;
+}
+
+.arrow-and-input{
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%) translateX(-50%);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .arrow {
-  position: absolute;
-  top: 10px; /* Position the arrows above the line */
   height: 0;
   width: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 12px solid red; /* Larger red arrow for visibility */
+  border-bottom: 12px solid red;
+   /* Larger red arrow for visibility */
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  -moz-transform: translateY(-50%) translateX(-50%);
+  -ms-transform: translateY(-50%) translateX(-50%);
+  -o-transform: translateY(-50%) translateX(-50%);
+}
+
+.arrow::after{
+  content: '';
+  width: 1px;
+  height: 20px;
+  background-color: red;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
 }
 
 input[type="text"] {
-  position: absolute;
-  bottom: 30px; /* Position below the arrow */
-  width: 50px; /* Set the width of your input fields */
-  text-align: center;
+  width: 50px;
+  /*Setthewidthofyourinputfields*/text-align: center;
   transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
 }
 
 /* Positioning helper classes, you'd set these based on the fraction you want to indicate. */
