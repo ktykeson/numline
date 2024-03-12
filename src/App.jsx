@@ -3,7 +3,7 @@ import './App.css'; // Assume this file contains your CSS
 
 const NumberLine = () => {
   // Example positions - you would generate these randomly within your component
-  const answers = [4.25, 2.5, 1.33, -5.2]
+  const answers = [-7, -3, 0, 2, 5, 7, 9]
 
   return (
         <div className="number-line">
@@ -16,11 +16,14 @@ const NumberLine = () => {
       </div>
       {/* Render arrows and input fields based on positions */}
       {answers.map((position, index) => (
-        <div key={index} data-number={position} className="arrow-and-input" style={{ right: `${position * 10}%` }}>
-          <input type="text" />
-          <div className="arrow" />
+        // Convert the position from -10 to 10 range into a 0 to 100% range for the CSS left property
+        // Assuming -10 is at 0% and 10 is at 100%, calculate the left percentage
+        // Formula: ((position - minimum) / totalRange) * 100
+        <div key={index} data-number={position} className="arrow-and-input" style={{ left: `${((position + 10) / 20) * 100}%` }}>
+            <input type="text" />
+            <div className="arrow" />
         </div>
-      ))}
+        ))}
     </div>
   );
 };
