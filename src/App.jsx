@@ -45,9 +45,9 @@ const NumberLine = () => {
   
       if(allCorrect) {
         setUserInputs({})
-        setPopupMessage('Correct! Great job!');
+        setPopupMessage('Correct! Goed gedaan!');
       } else {
-        setPopupMessage('Incorrect. Try again!');
+        setPopupMessage('Onjuist. Probeer het opnieuw!');
       }
   
       setShowPopup(true); // Show the popup with the result
@@ -97,7 +97,7 @@ const NumberLine = () => {
           </div>
         ))}
       </div>
-      <p className="instructions">Match the following numbers to the correct position on the number line:</p>
+      <p className="instructions">Zet de volgende getallen op de juiste plaats op de getallenlijn:</p>
       <div className="numbers-list">
         {answers.map((number, index) => (
           // Making numbers draggable
@@ -128,7 +128,7 @@ const NumberLine = () => {
           <div className="arrow" />
         </div>
       ))}
-      <button className="check-button" onClick={checkAnswers}>Check</button>
+      <button className="check-button" onClick={checkAnswers}>Controleer</button>
       {showPopup && <Popup message={popupMessage} confirm={closePopup} />}
     </div>
   );
