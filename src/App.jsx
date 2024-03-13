@@ -44,6 +44,7 @@ const NumberLine = () => {
       const allCorrect = answers.every((answer, index) => parseFloat(userInputs[index]) === answer);
   
       if(allCorrect) {
+        setUserInputs({})
         setPopupMessage('Correct! Great job!');
       } else {
         setPopupMessage('Incorrect. Try again!');
@@ -88,7 +89,6 @@ const NumberLine = () => {
   useEffect(() => {
     generateRandomNumbers();
   }, []);
-
   return (
     <div className="number-line">
       <div className="line">
@@ -101,8 +101,11 @@ const NumberLine = () => {
       <div className="numbers-list">
         {answers.map((number, index) => (
           // Making numbers draggable
-          <span key={index} className="number" draggable="true" 
-                onDragStart={(e) => e.dataTransfer.setData('text', number.toString())}>
+          //if number is in userInputs, put a activeNumber class to the span
+          // userInputs looks like this { [index]: data }
+          <span key={index} className={`number ${Object.keys(userInputs).some(key => userInputs[key] == number) ? 'activeNumber' : ''}`} draggable="true" 
+                onDragStart={(e) => e.dataTransfer.setData('text', number.toString())}
+                >
             {number}
           </span>
         ))}
@@ -110,11 +113,15 @@ const NumberLine = () => {
       {answers.map((position, index) => (
         <div key={index} data-number={position} className="arrow-and-input" style={{ left: `${(4*position+50)}%` }}>
           <input type="text" 
+                className={`input_field ${userInputs[index] ? "haveNumber" : ''}`}
+                data-test={userInputs[index]}
+                value={userInputs[index]}
+                placeholder='. . . .'
                  onDrop={(e) => {
                    e.preventDefault();
                    const data = e.dataTransfer.getData('text');
                    setUserInputs({...userInputs, [index]: data});
-                   e.target.value = data; // Direct manipulation for visual feedback, consider syncing with state for React-controlled approach
+                //    e.target.value = data; // Direct manipulation for visual feedback, consider syncing with state for React-controlled approach
                  }} 
                  onDragOver={(e) => e.preventDefault()} // Necessary to allow drop
                  onChange={(e) => handleInputChange(index, e.target.value)} />
