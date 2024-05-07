@@ -7,29 +7,10 @@ const NumberLine = () => {
     const [userInputs, setUserInputs] = useState({});
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
-  
-    // Function to handle number drag start
-    const handleDragStart = (e, number) => {
-        e.dataTransfer.setData('text/plain', number);
-      };
-  
-      // Function to handle drop on input field
-      const handleDrop = (index, e) => {
-        e.preventDefault();
-        const number = e.dataTransfer.getData('text');
-        setUserInputs({
-          ...userInputs,
-          [index]: number.trim() // Trim whitespace and set as input value
-        });
-  
-        // Optional: You might want to update the input fields to show the dropped number
-        e.target.value = number.trim(); // This directly sets the input value which is not the React way
-      };
-  
-      // Function to allow dropping by preventing the default behavior
-      const allowDrop = (e) => {
-        e.preventDefault();
-      };
+
+    const formatNumber = (number) => {
+        return number.toString().replace('.', ',');
+    };
   
     // Function to handle user input change
     const handleInputChange = (index, value) => {
@@ -101,12 +82,10 @@ const NumberLine = () => {
       <div className="numbers-list">
         {answers.map((number, index) => (
           // Making numbers draggable
-          //if number is in userInputs, put a activeNumber class to the span
-          // userInputs looks like this { [index]: data }
           <span key={index} className={`number ${Object.keys(userInputs).some(key => userInputs[key] == number) ? 'activeNumber' : ''}`} draggable="true" 
                 onDragStart={(e) => e.dataTransfer.setData('text', number.toString())}
                 >
-            {number}
+            {formatNumber(number)}
           </span>
         ))}
       </div>
@@ -115,13 +94,12 @@ const NumberLine = () => {
           <input type="text" 
                 className={`input_field ${userInputs[index] ? "haveNumber" : ''}`}
                 data-test={userInputs[index]}
-                value={userInputs[index]}
+                value={userInputs[index] && formatNumber(userInputs[index])}
                 placeholder='. . . .'
                  onDrop={(e) => {
                    e.preventDefault();
                    const data = e.dataTransfer.getData('text');
                    setUserInputs({...userInputs, [index]: data});
-                //    e.target.value = data; // Direct manipulation for visual feedback, consider syncing with state for React-controlled approach
                  }} 
                  onDragOver={(e) => e.preventDefault()} // Necessary to allow drop
                  onChange={(e) => handleInputChange(index, e.target.value)} />
